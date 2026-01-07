@@ -2,11 +2,11 @@ package com.chotot.vn.core_data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import com.chotot.vn.core_db.utils.CoreDBConstant
+import com.chotot.vn.utils.CoreDBConstant
 
 /**
  * this data class use for Room DataBase, if you want to update/add anything field
- * -> please migrate database version into class [CoreDBRoomDatabase.kt] to prevent DataBase crash
+ * -> please migrate database version into class [com.chotot.vn.sd.data.local.room.CoreDBRoomDatabase.kt] to prevent DataBase crash
  *
  * If you want to add new field -> please set your field default nullable
  * (like below fields, excepted field [primaryKeys] must not be null)

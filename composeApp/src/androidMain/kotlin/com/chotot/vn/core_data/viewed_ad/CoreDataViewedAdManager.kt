@@ -33,7 +33,10 @@ interface CoreDataViewedAdManager : List<Long> {
 
         override fun markViewedAd(listId: Long) {
             cache.put(listId, "")
-            sharedPreferenceHelper.putStringList("viewed_ad", cache.snapshot().keys.map { it.toString() }.toList())
+            sharedPreferenceHelper.putStringList(
+                "viewed_ad",
+                cache.snapshot().keys.map { it.toString() }.toList()
+            )
             cacheFlow.update { cache.snapshot().keys.toList() }
         }
 

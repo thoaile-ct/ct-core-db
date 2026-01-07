@@ -4,12 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.chotot.vn.core_db.utils.CoreDBConstant
+import com.chotot.vn.utils.CoreDBConstant
 
-/*
- * Copyright (c) 2019 Chotot Ltd Company. All rights reserved.
- * Created by trachlai@chotot.vn
- */
 @Entity(tableName = CoreDBConstant.TABLE_BOOKMARK)
 data class CoreDBBookmark(
 

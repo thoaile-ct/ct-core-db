@@ -2,7 +2,7 @@ package com.chotot.vn.core_data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import com.chotot.vn.core_db.utils.CoreDBConstant
+import com.chotot.vn.utils.CoreDBConstant
 
 /**
  * this data class use for Room DataBase, if you want to update/add anything field

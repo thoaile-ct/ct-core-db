@@ -1,5 +1,12 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.util.Properties
+import org.gradle.api.publish.maven.MavenPublication
+
+// Use version from root (loaded in root build.gradle.kts)
+val libVersion = rootProject.extra["libVersion"] as String
+
+// Set project coordinates so all publications inherit them
+group = "com.carousell"
+version = libVersion
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -75,11 +82,10 @@ publishing {
     publications {
         // Create a publication named "release" targeting the Android library's release variant
         create<MavenPublication>("release") {
-            groupId = "com.carousell"
+            groupId = group.toString()
             artifactId = "ct-android-core-db"
-            version = libVersion // is the version defined into file version.properties
+            version = libVersion
 
-            // Publish the Android AAR produced by the release variant directly
             val aar = layout.buildDirectory.file("outputs/aar/shared-release.aar")
             artifact(aar)
 
@@ -102,19 +108,11 @@ publishing {
     }
 }
 
-// Load version from version.properties at the root
-val versionPropsFile = rootProject.file("version.properties")
-val versionProps = Properties().apply {
-    if (versionPropsFile.exists()) {
-        load(versionPropsFile.inputStream())
+// Ensure publish tasks build the AAR first
+afterEvaluate {
+    tasks.matching { it.name == "publishReleasePublicationToGitHubPackagesRepository" ||
+            it.name == "publishReleasePublicationToMavenLocal" }.configureEach {
+        // Guard in case the task exists
+        tasks.findByName("assembleRelease")?.let { dep -> dependsOn(dep) }
     }
 }
-
-// version from version.properties
-val libVersion = listOf(
-    versionProps.getProperty("major") ?: "0",
-    versionProps.getProperty("minor") ?: "0",
-    versionProps.getProperty("patch") ?: "0"
-).joinToString(".")
-
-
