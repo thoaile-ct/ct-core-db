@@ -1,4 +1,4 @@
-package com.chotot.vn.core_db.utils
+package com.chotot.vn.utils
 
 object CoreDBConstant {
     const val TABLE_BOOKMARK = "bookmarks"
