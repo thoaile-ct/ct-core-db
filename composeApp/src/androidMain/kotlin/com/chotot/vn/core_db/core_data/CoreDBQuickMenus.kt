@@ -2,35 +2,34 @@ package com.chotot.vn.core_data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import com.chotot.vn.core_data.saved_ad.CoreDataBookmarkConstants
-import com.chotot.vn.core_data.saved_ad.CoreDataBookmarkConstants.TABLE_QUICK_MENUS_ID_POSITION
+import com.chotot.vn.core_db.utils.CoreDBConstant
 
 /**
  * this data class use for Room DataBase, if you want to update/add anything field
- * -> please migrate database version into class [CoreDBRoomDatabase.kt] to prevent DataBase crash
+ * -> please migrate database version into class [com.chotot.vn.sd.data.local.room.CoreDBRoomDatabase.kt] to prevent DataBase crash
  *
  * If you want to add new field -> please set your field default nullable
  * (like below fields, excepted field [primaryKeys] must not be null)
  */
 
 @Entity(
-    tableName = CoreDataBookmarkConstants.TABLE_QUICK_MENUS,
-    primaryKeys = [CoreDataBookmarkConstants.TABLE_QUICK_MENUS_ID]
+    tableName = CoreDBConstant.TABLE_QUICK_MENUS,
+    primaryKeys = [CoreDBConstant.TABLE_QUICK_MENUS_ID]
 )
 data class CoreDBQuickMenus(
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_QUICK_MENUS_ID)
-    val id: String = TABLE_QUICK_MENUS_ID_POSITION, // this id is hardcode for the position of UI view
+    @ColumnInfo(name = CoreDBConstant.TABLE_QUICK_MENUS_ID)
+    val id: String = CoreDBConstant.TABLE_QUICK_MENUS_ID_POSITION, // this id is hardcode for the position of UI view
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_QUICK_MENUS_COLUMN_STATUS)
+    @ColumnInfo(name = CoreDBConstant.TABLE_QUICK_MENUS_COLUMN_STATUS)
     val status: String? = null,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_QUICK_MENUS_COLUMN_MENUS_LIST)
+    @ColumnInfo(name = CoreDBConstant.TABLE_QUICK_MENUS_COLUMN_MENUS_LIST)
     val menusList: List<CoreDBQuickMenu>? = null,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_QUICK_MENUS_COLUMN_LABEL)
+    @ColumnInfo(name = CoreDBConstant.TABLE_QUICK_MENUS_COLUMN_LABEL)
     val label: String? = null,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_QUICK_MENUS_COLUMN_DESCRIPTION)
+    @ColumnInfo(name = CoreDBConstant.TABLE_QUICK_MENUS_COLUMN_DESCRIPTION)
     val description: String? = null,
 )
 

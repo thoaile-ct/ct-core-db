@@ -4,46 +4,46 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.chotot.vn.core_data.adlisting.CoreDataAdModel
+import com.chotot.vn.core_db.utils.CoreDBConstant
 
 /*
  * Copyright (c) 2019 Chotot Ltd Company. All rights reserved.
  * Created by trachlai@chotot.vn
  */
-@Entity(tableName = CoreDataBookmarkConstants.TABLE_BOOKMARK)
+@Entity(tableName = CoreDBConstant.TABLE_BOOKMARK)
 data class CoreDBBookmark(
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_BOOKMARK_COLUMN_AD_ID)
+    @ColumnInfo(name = CoreDBConstant.TABLE_BOOKMARK_COLUMN_AD_ID)
     var adId: Long? = 0,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_BOOKMARK_COLUMN_AD_SUBJECT)
+    @ColumnInfo(name = CoreDBConstant.TABLE_BOOKMARK_COLUMN_AD_SUBJECT)
     var adSubject: String? = null,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_BOOKMARK_COLUMN_AD_PRICE)
+    @ColumnInfo(name = CoreDBConstant.TABLE_BOOKMARK_COLUMN_AD_PRICE)
     var adPrice: String? = null,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_BOOKMARK_COLUMN_AD_TIME)
+    @ColumnInfo(name = CoreDBConstant.TABLE_BOOKMARK_COLUMN_AD_TIME)
     var adTime: String? = null,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_BOOKMARK_COLUMN_AD_IMG_URL)
+    @ColumnInfo(name = CoreDBConstant.TABLE_BOOKMARK_COLUMN_AD_IMG_URL)
     var adImgUrl: String? = null,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_BOOKMARK_COLUMN_AD_CATEGORY_ID)
+    @ColumnInfo(name = CoreDBConstant.TABLE_BOOKMARK_COLUMN_AD_CATEGORY_ID)
     var adCategoryId: Int? = 0,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_BOOKMARK_COLUMN_AD_BODY)
+    @ColumnInfo(name = CoreDBConstant.TABLE_BOOKMARK_COLUMN_AD_BODY)
     var adBody: String? = null,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_BOOKMARK_COLUMN_AD_NAME)
+    @ColumnInfo(name = CoreDBConstant.TABLE_BOOKMARK_COLUMN_AD_NAME)
     var adName: String? = null,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_BOOKMARK_COLUMN_AD_REGION)
+    @ColumnInfo(name = CoreDBConstant.TABLE_BOOKMARK_COLUMN_AD_REGION)
     var adRegion: String? = null,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_BOOKMARK_COLUMN_AD_PHONE)
+    @ColumnInfo(name = CoreDBConstant.TABLE_BOOKMARK_COLUMN_AD_PHONE)
     var adPhone: String? = null,
 
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_BOOKMARK_COLUMN_CREATED_TIME)
+    @ColumnInfo(name = CoreDBConstant.TABLE_BOOKMARK_COLUMN_CREATED_TIME)
     var adCreateTime: Int = 0,
 
     @Ignore
@@ -64,9 +64,10 @@ data class CoreDBBookmark(
 ) {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = CoreDataBookmarkConstants.TABLE_BOOKMARK_COLUMN_ID)
+    @ColumnInfo(name = CoreDBConstant.TABLE_BOOKMARK_COLUMN_ID)
     var id: Int? = null
 
     val isTrustedInventories: Boolean
-        get() = veh_inspected == CoreDataAdModel.VEH_INSPECTED_5_TOT_KEY || veh_inspected == CoreDataAdModel.VEH_INSPECTED_5_TOT_ODO_KEY
+        get() = veh_inspected == CoreDBConstant.VEH_INSPECTED_5_TOT_KEY
+                || veh_inspected == CoreDBConstant.VEH_INSPECTED_5_TOT_ODO_KEY
 }
