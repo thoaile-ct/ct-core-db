@@ -24,7 +24,7 @@ data class CoreDBCategories(
     val code: String? = null,
 
     @ColumnInfo(name = CoreDBConstant.TABLE_CATEGORIES_COLUMN_LIST)
-    val categories: MutableList<CoreDBCategory>? = null,
+    val categories: List<CoreDBCategory>? = null,
 )
 
 data class CoreDBCategory(

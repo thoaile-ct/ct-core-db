@@ -25,6 +25,13 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
+        maven("https://maven.pkg.github.com/carousell/ct-android-core_data") {
+            credentials {
+                // Provide either environment variables or hardcoded credentials (not recommended)
+                username = System.getenv("PACKAGES_USERNAME_GITHUB") ?: "GITHUB_USERNAME"
+                password = System.getenv("PACKAGES_TOKEN_GITHUB") ?: "YOUR_GITHUB_PAT_TOKEN"
+            }
+        }
     }
 }
 

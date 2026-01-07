@@ -25,6 +25,7 @@ kotlin {
             implementation(libs.room.runtime)
             implementation(libs.room.rxjava2)
             implementation(libs.room.ktx)
+            implementation(libs.core.data)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
