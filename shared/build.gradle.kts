@@ -79,40 +79,77 @@ room {
 }
 
 publishing {
-    publications {
-        // Create a publication named "release" targeting the Android library's release variant
-        create<MavenPublication>("release") {
-            groupId = group.toString()
-            artifactId = "ct-android-core-db"
-            version = libVersion
-
-            val aar = layout.buildDirectory.file("outputs/aar/shared-release.aar")
-            artifact(aar)
-
-            // Optionally attach sources jar if available
-            // artifact(tasks.named("androidReleaseSourcesJar"))
-        }
-    }
-
     repositories {
         maven {
             name = "GitHubPackages"
-            // Replace with your target GitHub Packages repo URL
             url = uri("https://maven.pkg.github.com/carousell/ct-android-core-db")
             credentials {
-                // Ideally sourced from environment variables or Gradle properties
                 username = System.getenv("PACKAGES_USERNAME_GITHUB") ?: ""
                 password = System.getenv("PACKAGES_TOKEN_GITHUB") ?: ""
             }
         }
+        mavenLocal()
+    }
+
+    // Note: In KMP projects, android.publishing.singleVariant("release") doesn't create a publication
+    // We need to manually create an Android publication or use the kotlinMultiplatform publication
+}
+
+afterEvaluate {
+    // Debug: Create a task to print publications
+    tasks.register("printPublications") {
+        doLast {
+            println("=== Available Publications ===")
+            publishing.publications.forEach {
+                println("Publication: ${it.name}")
+                if (it is MavenPublication) {
+                    println("  Group: ${it.groupId}")
+                    println("  Artifact: ${it.artifactId}")
+                    println("  Version: ${it.version}")
+                }
+            }
+            println("\n=== Publish Tasks ===")
+            tasks.matching { it.name.startsWith("publish") && it.name.contains("Publication") }.forEach {
+                println("Task: ${it.name}")
+            }
+        }
+    }
+
+    // Configure all publications with proper coordinates
+    publishing.publications.configureEach {
+        if (this is MavenPublication) {
+            when (name) {
+                "kotlinMultiplatform" -> {
+                    // This is the main publication we want to publish
+                    groupId = group.toString()
+                    artifactId = "ct-android-core-db"
+                    version = libVersion
+                }
+                "iosArm64", "iosSimulatorArm64" -> {
+                    // Keep default names for iOS (they won't be published)
+                }
+            }
+        }
+    }
+
+    // Create custom tasks to publish only the kotlinMultiplatform publication (avoiding iOS)
+    tasks.register("publishAndroidToGitHub") {
+        group = "publishing"
+        description = "Publishes the Kotlin Multiplatform publication (Android library) to GitHub Packages"
+        dependsOn(tasks.named("publishKotlinMultiplatformPublicationToGitHubPackagesRepository"))
+    }
+
+    tasks.register("publishAndroidToMavenLocal") {
+        group = "publishing"
+        description = "Publishes the Kotlin Multiplatform publication (Android library) to Maven Local"
+        dependsOn(tasks.named("publishKotlinMultiplatformPublicationToMavenLocal"))
     }
 }
 
-// Ensure publish tasks build the AAR first
-afterEvaluate {
-    tasks.matching { it.name == "publishReleasePublicationToGitHubPackagesRepository" ||
-            it.name == "publishReleasePublicationToMavenLocal" }.configureEach {
-        // Guard in case the task exists
-        tasks.findByName("assembleRelease")?.let { dep -> dependsOn(dep) }
-    }
-}
+
+
+
+
+
+
+
